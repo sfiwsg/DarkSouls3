@@ -1,0 +1,564 @@
+<!DOCTYPE html> 
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dark Souls 3</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 20px;
+      height: 100%;
+	  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+    }
+	
+	body {
+      background: url('images/image_2025-05-15_21-55-15.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+	
+	nav {
+		display: flex;
+		gap: 20px;
+		justify-content: center;
+		padding: 15px;
+		background-color: #111;
+	}
+
+	nav a {
+		color: white;
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.3s;
+	}
+
+	nav a:hover {
+		color: #ff9900;
+	}
+
+	nav a.active {
+		color: orange;
+		font-weight: bold;
+	}
+	
+    header.hero-header {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: url('images/Soul of Cinder.jpg') no-repeat center center/cover;
+      transition: height 0.8s ease, opacity 0.8s ease;
+      overflow: hidden;
+    }
+
+    header.hero-header.shrink {
+      height: 60px;
+      opacity: 0.7;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      z-index: 1;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      z-index: 2;
+      transition: top 0.8s ease;
+    }
+
+    header.hero-header.shrink .logo {
+      top: 10px;
+    }
+
+    .logo img {
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 4px;
+    }
+
+    .logo span {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .game-title {
+      z-index: 2;
+      font-size: 4.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      transition: opacity 0.8s ease;
+    }
+
+    header.hero-header.shrink .game-title {
+      opacity: 0;
+    }
+
+    .nav-menu {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 20px;
+      z-index: 2;
+      flex-wrap: wrap;
+      transition: top 0.8s ease;
+    }
+
+    header.hero-header.shrink .nav-menu {
+      top: 10px;
+    }
+
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+      color: #b8860b; /* золотистий */
+    }
+
+    .section-title {
+      background-color: #b8860b;
+      color: black;
+      padding: 10px 20px;
+      font-weight: bold;
+      font-size: 1.6rem;
+      margin: 50px auto 20px;
+      width: fit-content;
+      border-radius: 5px;
+    }
+
+    .content-block {
+      max-width: 900px;
+      margin: 0 auto 50px;
+      background-color: #2e2e2e;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+      display: flex;
+      gap: 30px;
+      padding: 25px;
+      align-items: center;
+      color: white;
+      line-height: 1.6;
+    }
+
+    .content-block.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .visual, .info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .visual img, .visual video {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 2px solid #b8860b;
+      display: block;
+    }
+
+    .info {
+      padding-left: 20px;
+    }
+
+    .lords-gallery {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      padding: 20px 10px;
+      gap: 15px;
+    }
+
+    .lord {
+      width: 200px; 
+      text-align: center;
+      margin: 0;
+      background-color: #2e2e2e;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.7);
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .lord img {
+      width: 100%;
+      border-radius: 8px;
+      border: 2px solid #b8860b;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      background-color: rgba(0,0,0,0.8);
+      padding: 20px;
+      text-align: center;
+      color: #aaa;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .game-title {
+        font-size: 2.5rem;
+      }
+
+      .nav-menu {
+        flex-direction: column;
+        gap: 10px;
+        background-color: rgba(0,0,0,0.7);
+        padding: 10px 15px;
+        border-radius: 10px;
+      }
+
+      .logo span {
+        font-size: 1rem;
+      }
+
+      .content-block {
+        flex-direction: column;
+        max-width: 90%;
+        padding: 15px;
+      }
+
+      .content-block.reverse {
+        flex-direction: column;
+      }
+
+      .info {
+        padding-left: 0;
+        margin-top: 15px;
+      }
+
+      .lords-gallery {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .lord {
+        width: 45%;
+        margin: 10px 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero-header" id="hero">
+    <div class="overlay"></div>
+
+    <div class="logo">
+      <img src="images/dark_souls_3_soul_of_cinder.jpg" alt="Logo" />
+      <span>Dark Souls 3</span>
+    </div>
+
+    <h1 class="game-title">D̷̲̳̝͋̔́̓́á̵̱͍̱͗͑̚r̴̯̰͇̘̀͆̓ͅk̶̤̥̤̝͆͑͆̆ͅ S̷͚͕̘̅̈̇o҉͔͔̝̀͌̉͑̂u҈͖͉̲͑̓l̷̤̣͍̄͆s̵̰͚̉̏͊ 3҉̙͉͉̅̂</h1>
+
+    <nav class="nav-menu">
+      <a href="Dark-Souls-3.html">1. Вступ</a>
+      <a href="Lore.html">2. Основний сюжет</a>
+      <a href="Final.html">3. Фінали</a>
+      <a href="Community.html">4. Ігрова механіка</a>
+    </nav>
+  </header>
+  
+<section>
+  <h2 class="section-title">Персонаж</h2>
+  <div class="content-block">
+    <div class="info">
+      <p>У Dark Souls 3 кожне рішення впливає на хід гри: вибір класу, розвиток персонажа, взаємодія з NPC, та навіть фінал. Цей розділ розповідає про основні механіки гри та їхній вплив на подорож гравця.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Бойова система</h2>
+  <div class="content-block" style="flex-direction: column;">
+  <div class="info">
+    <strong>Dark Souls 3 має швидкий і агресивний бойовий стиль, що поєднує класичні механіки серії з новими можливостями.</strong>
+    <p>Основні бойові елементи</p>
+    <ul>
+      <li>Витривалість (Stamina) – ключовий ресурс для атак, ухиляння та блокування.</li>
+      <li>Хітбокси та відчуття ваги – кожен удар має значення, а броня та зброя впливають на рухливість.</li>
+      <li>Система парирування та контратак – можливість відбити атаку противника та провести критичний удар.</li>
+      <li>Бойові вміння (Weapon Arts) – спеціальні прийоми для кожного виду зброї, що дозволяють використовувати унікальні атаки.</li>
+    </ul>
+  </div>
+   <div class="visual">
+    <img src="images/DARK SOULS™ III_20160413000416_0.png" alt="Бойова система Dark Souls 3" />
+   </div>
+  </div>
+
+  <h2 class="section-title">Вид зброї та стилі гри</h2>
+  <div class="content-block">
+    <div class="visual">
+      <img src="images/d9vaiq1-535a73db-2761-4750-82c2-dc433c669f38.png" alt="Weapons">
+    </div>
+    <div class="info">
+      <p>Гравець може використовувати різноманітну зброю, від мечів і списів до магічних посохів і піромантійських рукавичок.</p>
+      <ul>
+        <li>Легке озброєння – швидкі атаки, висока мобільність.</li>
+        <li>Важке озброєння – повільні, але потужні удари.</li>
+        <li>Дистанційні атаки – тактичні можливості для контролю бою.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">Ігрове ком'юніті створило тір-ліст зі всією зброєю в ігрі</h2>
+  <div class="content-block">
+    <div class="visual">
+      <img src="images/ranking-every-weapon-no-bows-for-pve-personal-choice-after-v0-613lquieikzb1.jpg" alt="Weapon tier list">
+    </div>
+  </div>
+
+  <h2 class="section-title">Розвиток персонажа</h2>
+<div class="content-block" style="flex-direction: column;">
+  <div class="info">
+    <p>Гравець може будувати свого героя за різними архетипами, розподіляючи очки характеристик. В грі присутньо багато різноманітних характеристик, основні з яких:</p>
+    <ul>
+      <li><strong>Сила</strong> – збільшує фізичну атаку.</li>
+      <li><strong>Спритність</strong> – впливає на швидкість атаки.</li>
+      <li><strong>Інтелект</strong> – підсилює магію.</li>
+      <li><strong>Віра</strong> – покращує чудеса.</li>
+      <li><strong>Життєва сила</strong> – збільшує HP.</li>
+      <li><strong>Витривалість</strong> – впливає на стійкість.</li>
+    </ul>
+  </div>
+  <div class="visual">
+    <img src="images/darksouls3-stats-screen.jpg" alt="Character Development" />
+  </div>
+</div>
+
+  <h2 class="section-title">Вибір класу та його вплив</h2>
+  <div class="content-block" style="flex-direction: column;">
+  <div class="info">
+    <p>Гравець починає гру, обираючи один із класів:</p>
+    <ul>
+      <li><strong>Лицар (Knight)</strong> — Шляхетний лицар, який збіднів, але продовжує шлях честі. Має високий рівень життєвої сили та міцну броню.</li>
+      <li><strong>Найманець (Mercenary)</strong> — Ветеран, який звик до битв. Володіє двома мечами та високою спритністю.</li>
+      <li><strong>Воїн (Warrior)</strong> — Нащадок древніх воїнів, здатний носити найважчу зброю.</li>
+      <li><strong>Герольд (Herald)</strong> — Мандрівний лицар, який має талісман для використання чудес і спис для бою.</li>
+      <li><strong>Злодій (Thief)</strong> — Швидкий і спритний боєць, що володіє луком і кинджалом.</li>
+      <li><strong>Вбивця (Assassin)</strong> — Спеціалізується на тихих атаках і магії, що робить його смертоносним у PvP.</li>
+      <li><strong>Чарівник (Sorcerer)</strong> — Випускник магічної академії, що володіє сильними чарами.</li>
+      <li><strong>Піромант (Pyromancer)</strong> — Мандрівник, що володіє вогнем.</li>
+      <li><strong>Жрець (Cleric)</strong> — Священик, що володіє цілющими чарами.</li>
+      <li><strong>Жебрак (Deprived)</strong> — Без минулого та майбутнього. Починає голим.</li>
+    </ul>
+    <p>Вибір класу задає стартову стратегію, але гравець може розвивати персонажа в будь-якому напрямку.</p>
+  </div>
+  <div class="visual">
+    <img src="images/i-coose-mercenary-all-the-time-whats-your-class-v0-n3sg9b8qrr191.jpg" alt="Вибір класу Dark Souls 3" />
+  </div>
+</div>
+
+  <h2 class="section-title">Взаємодія з NPC та сюжетні квести</h2>
+  <div class="content-block">
+    <div class="visual">
+      <img src="images/Dark-Souls-NPCs.jpg" alt="NPC Quests">
+    </div>
+    <div class="info">
+      <p><strong>Вплив рішень гравця</strong></p>
+      <ul>
+        <li>Сігвард з Катари – союзник у битві з Йормом.</li>
+        <li>Анрі з Астори – впливає на фінал гри.</li>
+        <li>Йоель і Юрія з Лондора – допомагають отримати темний фінал.</li>
+        <li>Грейрат – ризик загибелі, якщо не допомогти вчасно.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">Онлайн-режим: кооперація та PvP</h2>
+  <div class="content-block">
+    <div class="visual">
+      <img src="images/Invader-Backstep.jpg" alt="Online Modes">
+    </div>
+    <div class="info">
+      <p><strong>Кооперативний режим</strong></p>
+      <p>Гравці можуть викликати союзників для спільної боротьби проти босів.</p>
+      <p><strong>PvP та вторгнення</strong></p>
+      <ul>
+        <li>Вторгнення в інші світи для вбивства гравця.</li>
+        <li>Захист за допомогою Синіх Стражів або Сонячного Ковенанту.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">Ковенанти: шлях обраного</h2>
+  <div class="content-block">
+    <div class="visual">
+      <img src="images/8iqziznicnl91.jpg" alt="Covenants">
+    </div>
+    <div class="info">
+      <p>Ковенанти – це фракції, до яких може приєднатися гравець. Вони впливають на багатокористувацьку гру та дають унікальні нагороди.</p>
+      <ul>
+        <li>Сонячні Воїни</li>
+        <li>Шлях Блакиті</li>
+        <li>Сині Вартові</li>
+        <li>Леза Темного Місяця</li>
+        <li>Пальці Розарії</li>
+        <li>Творці Курганів</li>
+        <li>Сторожові Пси Фаррона</li>
+        <li>Вірні Олдрічу</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">Як вибір гравця впливає на світ</h2>
+  <div class="content-block" style="flex-direction: column;">
+  <div class="info">
+    <ul>
+      <li>Дії гравця змінюють доступність локацій та NPC.</li>
+      <li>Фінал визначає долю світу.</li>
+      <li>Ковенанти впливають на PvP і сюжетні події.</li>
+    </ul>
+  </div>
+  <div class="visual">
+    <img src="images/The-Art-Of-Dark-Souls-III-1.jpg" alt="Player Impact" />
+  </div>
+</div>
+	<h2 class="section-title">Наскільки добре ви зрозуміли світ гри?</h2>
+	<div class="content-block" id="quiz-container" style="flex-direction: column; background-color: #1e1e1e; padding: 20px;">
+  <script>
+ const quizData = [
+  {
+    question: "В якому місці прокидається неживий герой?",
+    options: ["Анор Лондо", "Кладовище попелу", "Поселення нежиті"],
+    correctIndex: 1
+  },
+  {
+    question: "Яка зброя здатна перемогти Йорма?",
+    options: ["Магія вогню", "Гостра катана", "Особлива зброя яку можна знайти на арені з босом"],
+    correctIndex: 2
+  },
+  {
+    question: "Яку назву має третя (секретна) кінцівка?",
+    options: ["Згасання Вогню", "Поглинання Вогню", "Запалаювання Вогню"],
+    correctIndex: 1
+  },
+  {
+    question: "Хто з лордів попелу був Жрецем?",
+    options: ["Йорм Велетень", "Лотрицькі Принци", "Альдрік, Пожирач Богів"],
+    correctIndex: 2
+  },
+  {
+    question: "Де головний герой зустрічає Хранительку Вогню?",
+    options: ["Храм Вогню", "Храм Глибин", "Подземелье Иритилла"],
+    correctIndex: 0
+  }
+];
+
+  const quizContainer = document.getElementById('quiz-container');
+
+  function createQuiz() {
+    quizData.forEach((item, index) => {
+      const questionBlock = document.createElement('div');
+      questionBlock.style.marginBottom = "20px";
+
+      const q = document.createElement('p');
+      q.style.fontWeight = 'bold';
+      q.textContent = `${index + 1}. ${item.question}`;
+      questionBlock.appendChild(q);
+
+      item.options.forEach((option, i) => {
+        const label = document.createElement('label');
+        label.style.display = "block";
+        label.style.cursor = "pointer";
+        label.style.marginTop = "5px";
+
+        const radio = document.createElement('input');
+        radio.type = "radio";
+        radio.name = `question${index}`;
+        radio.value = i;
+
+        label.appendChild(radio);
+        label.appendChild(document.createTextNode(" " + option));
+        questionBlock.appendChild(label);
+      });
+
+      quizContainer.appendChild(questionBlock);
+    });
+
+    const checkBtn = document.createElement('button');
+    checkBtn.textContent = "Перевірити відповіді";
+    checkBtn.style.padding = "10px 20px";
+    checkBtn.style.backgroundColor = "#b8860b";
+    checkBtn.style.border = "none";
+    checkBtn.style.color = "black";
+    checkBtn.style.fontWeight = "bold";
+    checkBtn.style.borderRadius = "5px";
+    checkBtn.style.cursor = "pointer";
+    checkBtn.style.marginTop = "10px";
+
+    quizContainer.appendChild(checkBtn);
+
+    const result = document.createElement('p');
+    result.style.marginTop = "15px";
+    result.style.fontWeight = "bold";
+    quizContainer.appendChild(result);
+
+    checkBtn.addEventListener('click', () => {
+      let score = 0;
+      quizData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="question${index}"]:checked`);
+        if (selected && parseInt(selected.value) === item.correctIndex) {
+          score++;
+        }
+      });
+      result.textContent = `Ви відповіли правильно на ${score} з ${quizData.length} питань.`;
+    });
+  }
+
+  createQuiz();
+</script>
+
+</div>
+</section>
+
+  <footer>
+     © 2025 Dark Souls 3 — Всі права захищені Тел:+38(095-914-2615) Пошта:idgbss@gmail.com
+  </footer>
+
+   <script>
+    window.addEventListener("scroll", function() {
+      const header = document.getElementById("hero");
+      if (window.scrollY > 50) {
+        header.classList.add("shrink");
+      } else {
+        header.classList.remove("shrink");
+      }
+    });
+  </script>
+  <script>
+	const current = window.location.pathname.split("/").pop().toLowerCase();
+	document.querySelectorAll(".nav-menu a").forEach(link => {
+		const href = link.getAttribute("href").toLowerCase();
+		if (href === current) {
+		link.classList.add("active");
+		}
+	});
+  </script>
+
+</body>
+</html>

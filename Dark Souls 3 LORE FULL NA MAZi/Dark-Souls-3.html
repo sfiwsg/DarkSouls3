@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dark Souls 3</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+	  font-family: 'Times New Roman', Times, serif;
+	  font-size: 20px;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+    }
+
+    body {
+      background: url('images/darksouls35.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+	nav {
+		display: flex;
+		gap: 20px;
+		justify-content: center;
+		padding: 15px;
+		background-color: #111;
+	}
+
+	nav a {
+		color: white;
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.3s;
+	}
+
+	nav a:hover {
+		color: #ff9900;
+	}
+
+	nav a.active {
+		color: orange;
+		font-weight: bold;
+	}
+	
+    header.hero-header {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: url('images/Soul of Cinder.jpg') no-repeat center center/cover;
+      transition: height 0.8s ease, opacity 0.8s ease;
+      overflow: hidden;
+    }
+
+    header.hero-header.shrink {
+      height: 60px;
+      opacity: 0.7;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      z-index: 1;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      z-index: 2;
+      transition: top 0.8s ease;
+    }
+
+    header.hero-header.shrink .logo {
+      top: 10px;
+    }
+
+    .logo img {
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 4px;
+    }
+
+    .logo span {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .game-title {
+      z-index: 2;
+      font-size: 4.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      transition: opacity 0.8s ease;
+    }
+
+    header.hero-header.shrink .game-title {
+      opacity: 0;
+    }
+
+    .nav-menu {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 20px;
+      z-index: 2;
+      flex-wrap: wrap;
+      transition: top 0.8s ease;
+    }
+
+    header.hero-header.shrink .nav-menu {
+      top: 10px;
+    }
+
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+      color: #b8860b; /* золотистий */
+    }
+
+    .section-title {
+      background-color: #b8860b;
+      color: black;
+      padding: 10px 20px;
+      font-weight: bold;
+      font-size: 1.4rem;
+      margin: 50px auto 20px;
+      width: fit-content;
+      border-radius: 5px;
+    }
+
+    .content-block {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      background-color: #2e2e2e;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+      align-items: center;
+      color: white;
+    }
+
+    .visual, .info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .visual img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 2px solid #b8860b;
+      display: block;
+    }
+
+    .info {
+      line-height: 1.6;
+      padding-left: 20px;
+    }
+
+    .lords-gallery {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      padding: 20px 10px;
+      gap: 15px;
+    }
+
+    .lord {
+      width: 200px; 
+      text-align: center;
+      margin: 0;
+      background-color: #2e2e2e;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.7);
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .lord img {
+      width: 100%;
+      border-radius: 8px;
+      border: 2px solid #b8860b;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      background-color: rgba(0,0,0,0.8);
+      padding: 20px;
+      text-align: center;
+      color: #aaa;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .game-title {
+        font-size: 2.5rem;
+      }
+
+      .nav-menu {
+        flex-direction: column;
+        gap: 10px;
+        background-color: rgba(0,0,0,0.7);
+        padding: 10px 15px;
+        border-radius: 10px;
+      }
+
+      .logo span {
+        font-size: 1rem;
+      }
+
+      .content-block {
+        flex-direction: column;
+        max-width: 90%;
+      }
+
+      .info {
+        padding-left: 0;
+        margin-top: 15px;
+      }
+
+      .lords-gallery {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .lord {
+        width: 45%;
+        margin: 10px 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero-header" id="hero">
+    <div class="overlay"></div>
+
+    <div class="logo">
+      <img src="images/dark_souls_3_soul_of_cinder.jpg" alt="Logo" />
+      <span>Dark Souls 3</span>
+    </div>
+
+    <h1 class="game-title">D̷̲̳̝͋̔́̓́á̵̱͍̱͗͑̚r̴̯̰͇̘̀͆̓ͅk̶̤̥̤̝͆͑͆̆ͅ S̷͚͕̘̅̈̇o҉͔͔̝̀͌̉͑̂u҈͖͉̲͑̓l̷̤̣͍̄͆s̵̰͚̉̏͊ 3҉̙͉͉̅̂</h1>
+
+    <nav class="nav-menu">
+      <a href="Dark-Souls-3.html">1. Вступ</a>
+      <a href="Lore.html">2. Основний сюжет</a>
+      <a href="Final.html">3. Фінали</a>
+      <a href="Community.html">4. Ігрова механіка</a>
+    </nav>
+  </header>
+
+  <div class="section-title">Опис світу Dark Souls 3</div>
+  <div class="content-block">
+    <div class="visual"><img src="images/image_2025-05-16_05-52-17.png" alt="Світ" /></div>
+    <div class="info">
+      Світ Dark Souls 3 знаходиться на межі загибелі. Полум'я, що колись освітлювало все живе, згасає, а разом із ним руйнується порядок, який тримав світ у рівновазі. Відродження цього полум'я – це традиція, яку виконували багато поколінь, але тепер мало хто хоче принести себе в жертву.
+      У центрі подій знаходиться королівство Лотрік – остання опора старого світу. Його принци відмовилися від долі жертовних Лордів Попелу, що спричинило хаос і прискорило прихід темряви.
+    </div>
+  </div>
+
+  <div class="section-title">Прокляття Нежиті та загибель світла</div>
+  <div class="content-block">
+    <div class="visual"><img src="images/dsadad.jpg" alt="Нежить" /></div>
+    <div class="info">
+      У світі Dark Souls існує таємнича хвороба – прокляття Нежиті. Воно забирає у людей їхню людяність, перетворюючи їх на божевільних істот – Порожніх. Це прокляття посилюється, коли вогонь слабшає. Гравець – один із таких неживих, але він має шанс змінити хід історії.
+      Герой пробуджується у світі, що вже практично загинув. Вулиці заповнені Порожніми, стародавні королівства лежать у руїнах, а більшість богів або мертві, або втратили свою силу.
+    </div>
+  </div>
+
+  <div class="section-title">Лорди Попелу та їхня роль</div>
+  <div class="content-block">
+    <div class="visual"><img src="images/Dark_souls_3_cover_art.jpg" alt="Лорди Попелу" /></div>
+    <div class="info">
+      Щоб не дати світові впасти у повну темряву, королі й герої минулого жертвували собою, згораючи у Вогнищі Першого Полум'я. Вони ставали Лордами Попелу, охоронцями вогню.
+      Однак у Dark Souls 3 нові Лорди Попелу відмовилися виконати свою місію. Тому герой повинен знайти їх, повернути на їхні трони або знищити, щоб знову розпалити Вогонь.
+    </div>
+  </div>
+
+  <div class="section-title">Лорди Попелу</div>
+  <div class="lords-gallery">
+    <div class="lord">
+	 <img src="images/3F3F3F3F3F3F3F3F3F3F3F3F3F.jpg" alt="Йорм">
+  <p><strong>Легіон Неживих (Фарронські вовки)</strong><br>Колишні захисники, що стали некерованими.</p>
+</div>
+<div class="lord">
+  <img src="images/image_2025-05-15_22-00-43.png" alt="Йорм">
+  <p><strong>Йорм Велетень</strong><br>Правитель загиблого міста, що обрав власний шлях.</p>
+</div>
+<div class="lord">
+  <img src="images/3F3F3F3F3F3F3F3F3F3F3F.jpg" alt="Альдрік">
+  <p><strong>Альдрік, Пожирач Богів</strong><br>Жрець, що перетворився на жахливу істоту.</p>
+</div>
+<div class="lord">
+  <img src="images/123.jpg" alt="Лотрик і Лоріан">
+  <p><strong>Лотрицькі Принци</strong><br>Королівська династія, яка вирішила відмовитися від жертовності.</p>
+</div>
+  </div>
+
+  <div class="section-title">Основний конфлікт: Вогонь чи Темрява?</div>
+  <div class="content-block">
+    <div class="visual"><img src="images/Bonfire_III.jpg" alt="Вогонь чи темрява" /></div>
+    <div class="info">
+      Гравець стає частиною вічного циклу: Вогонь слабшає – Темрява наступає – знаходиться новий герой, що розпалює Вогонь. Однак у Dark Souls 3 натякають, що цей цикл більше не працює.
+      Тому постає головне питання гри: Чи варто знову розпалювати Вогонь, чи настав час дозволити світові змінитися?
+    </div>
+  </div>
+
+  <footer>
+     © 2025 Dark Souls 3 — Всі права захищені Тел:+38(095-914-2615) Пошта:idgbss@gmail.com
+  </footer>
+
+  <script>
+    window.addEventListener("scroll", function() {
+      const header = document.getElementById("hero");
+      if (window.scrollY > 50) {
+        header.classList.add("shrink");
+      } else {
+        header.classList.remove("shrink");
+      }
+    });
+  </script>
+  <script>
+	const current = window.location.pathname.split("/").pop().toLowerCase();
+	document.querySelectorAll(".nav-menu a").forEach(link => {
+		const href = link.getAttribute("href").toLowerCase();
+		if (href === current) {
+		link.classList.add("active");
+		}
+	});
+  </script>
+</body>
+</html>

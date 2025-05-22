@@ -1,0 +1,407 @@
+<!DOCTYPE html> 
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dark Souls 3</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 20px;
+      height: 100%;
+	  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+    }
+	
+	body {
+      background: url('images/image_2025-05-16_06-26-37.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+	
+	nav {
+		display: flex;
+		gap: 20px;
+		justify-content: center;
+		padding: 15px;
+		background-color: #111;
+	}
+
+	nav a {
+		color: white;
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.3s;
+	}
+
+	nav a:hover {
+		color: #ff9900;
+	}
+
+	nav a.active {
+		color: orange;
+		font-weight: bold;
+	}
+	
+    header.hero-header {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: url('images/Soul of Cinder.jpg') no-repeat center center/cover;
+      transition: height 0.8s ease, opacity 0.8s ease;
+      overflow: hidden;
+    }
+
+    header.hero-header.shrink {
+      height: 60px;
+      opacity: 0.7;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      z-index: 1;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      z-index: 2;
+      transition: top 0.8s ease;
+    }
+
+    header.hero-header.shrink .logo {
+      top: 10px;
+    }
+
+    .logo img {
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 4px;
+    }
+
+    .logo span {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .game-title {
+      z-index: 2;
+      font-size: 4.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      transition: opacity 0.8s ease;
+    }
+
+    header.hero-header.shrink .game-title {
+      opacity: 0;
+    }
+
+    .nav-menu {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 20px;
+      z-index: 2;
+      flex-wrap: wrap;
+      transition: top 0.8s ease;
+    }
+
+    header.hero-header.shrink .nav-menu {
+      top: 10px;
+    }
+
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+      color: #b8860b; /* золотистий */
+    }
+
+    .section-title {
+      background-color: #b8860b;
+      color: black;
+      padding: 10px 20px;
+      font-weight: bold;
+      font-size: 1.6rem;
+      margin: 50px auto 20px;
+      width: fit-content;
+      border-radius: 5px;
+    }
+
+    .content-block {
+      max-width: 900px;
+      margin: 0 auto 50px;
+      background-color: #2e2e2e;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+      display: flex;
+      gap: 30px;
+      padding: 25px;
+      align-items: center;
+      color: white;
+      line-height: 1.6;
+    }
+
+    .content-block.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .visual, .info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .visual img, .visual video {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 2px solid #b8860b;
+      display: block;
+    }
+
+    .info {
+      padding-left: 20px;
+    }
+
+    .lords-gallery {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      padding: 20px 10px;
+      gap: 15px;
+    }
+
+    .lord {
+      width: 200px; 
+      text-align: center;
+      margin: 0;
+      background-color: #2e2e2e;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.7);
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .lord img {
+      width: 100%;
+      border-radius: 8px;
+      border: 2px solid #b8860b;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      background-color: rgba(0,0,0,0.8);
+      padding: 20px;
+      text-align: center;
+      color: #aaa;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .game-title {
+        font-size: 2.5rem;
+      }
+
+      .nav-menu {
+        flex-direction: column;
+        gap: 10px;
+        background-color: rgba(0,0,0,0.7);
+        padding: 10px 15px;
+        border-radius: 10px;
+      }
+
+      .logo span {
+        font-size: 1rem;
+      }
+
+      .content-block {
+        flex-direction: column;
+        max-width: 90%;
+        padding: 15px;
+      }
+
+      .content-block.reverse {
+        flex-direction: column;
+      }
+
+      .info {
+        padding-left: 0;
+        margin-top: 15px;
+      }
+
+      .lords-gallery {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .lord {
+        width: 45%;
+        margin: 10px 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero-header" id="hero">
+    <div class="overlay"></div>
+
+    <div class="logo">
+      <img src="images/dark_souls_3_soul_of_cinder.jpg" alt="Logo" />
+      <span>Dark Souls 3</span>
+    </div>
+
+    <h1 class="game-title">D̷̲̳̝͋̔́̓́á̵̱͍̱͗͑̚r̴̯̰͇̘̀͆̓ͅk̶̤̥̤̝͆͑͆̆ͅ S̷͚͕̘̅̈̇o҉͔͔̝̀͌̉͑̂u҈͖͉̲͑̓l̷̤̣͍̄͆s̵̰͚̉̏͊ 3҉̙͉͉̅̂</h1>
+
+    <nav class="nav-menu">
+      <a href="Dark-Souls-3.html">1. Вступ</a>
+      <a href="Lore.html">2. Основний сюжет</a>
+      <a href="Final.html">3. Фінали</a>
+      <a href="Community.html">4. Ігрова механіка</a>
+    </nav>
+  </header>
+
+  <h2 class="section-title">Фінал. Доля світу залежить від гравця</h2>
+<div class="content-block">
+  <div class="visual">
+    <img src="images/2xdwpul-2.jpg" alt="Фінал вибір">
+  </div>
+</div>
+
+<h2 class="section-title">Фінальна битва: Душа Попелу – уособлення всіх героїв</h2>
+<div class="content-block" style="flex-direction: column;">
+  <div class="info">
+    <h3>Хто така Душа Попелу?</h3>
+    <p>Це не просто один персонаж – це втілення всіх, хто колись запалював Вогонь. Вона складається з душ колишніх Лордів та героїв, що жертвували собою в минулому. Найважливіше – в її русі та атаках можна впізнати стиль Гвіна, Першого Лорда.</p>
+    <h3>Фази битви</h3>
+    <ul>
+      <li><strong>Перша фаза</strong> – Душа Попелу змінює стилі бою, використовуючи різну зброю та магію, що символізує минулих обраних неживих.</li>
+      <li><strong>Друга фаза</strong> – вона переходить у режим Гвіна, атакуючи блискавично швидкими ударами та використовуючи легендарний прийом Гвіна – удар блискавичним мечем.</li>
+    </ul>
+    <p>Це фінальне випробування, яке символізує вічний цикл. Якщо гравець перемагає – він отримує можливість обрати долю світу.</p>
+  </div>
+  <div class="visual">
+    <img src="images/dark-souls-3.jpeg" alt="Душа Попелу" />
+  </div>
+</div>
+
+<h2 class="section-title">Відновлення Вогню (Традиційний фінал)</h2>
+<div class="content-block" style="flex-direction: column;">
+  <div class="info">
+    <h3>Відновлення Вогню</h3>
+    <p>Якщо гравець запалює Вогонь, він повторює цикл, що існує з часів Гвіна.</p>
+    <p><strong>Що відбувається?</strong> Герой приносить себе в жертву, дозволяючи Вогню горіти ще один цикл. Світ продовжує існувати у старих рамках, але це лише тимчасове рішення.</p>
+    <p><strong>Символіка фіналу:</strong> Цей фінал показує, що герой приймає старий порядок, але гра натякає, що це вже неефективний вибір.</p>
+  </div>
+  <div class="visual">
+    <video controls width="100%">
+      <source src="videos/Dark%20Souls%203%20-%20Ending%20%231%20-%20To%20Link%20the%20First%20Flame.mp4" type="video/mp4" />
+    </video>
+  </div>
+</div>
+
+<h2 class="section-title">Відмова від Вогню (Темний фінал)</h2>
+<div class="content-block" style="flex-direction: column;">
+  <div class="info">
+    <h3>Відмова від Вогню</h3>
+    <p>Гравець обирає не запалювати Вогонь і дозволяє світові зануритися в Темряву.</p>
+    <p><strong>Що відбувається?</strong> Герой покидає Вогнище Першого Полум'я, залишаючи його згасати. Настає нова ера – Епоха Людства.</p>
+    <p><strong>Символіка фіналу:</strong> Цикл Вогню та Темряви розривається, але подальша доля світу залишається невідомою.</p>
+  </div>
+  <div class="visual">
+    <video controls width="100%">
+      <source src="videos/Dark%20Souls%203%20-%20Ending%20%232%20-%20The%20End%20of%20Fire.mp4" type="video/mp4" />
+    </video>
+  </div>
+</div>
+
+<h2 class="section-title">Поглинання Вогню (Секретний фінал)</h2>
+<div class="content-block" style="flex-direction: column;">
+  <div class="info">
+    <h3>Поглинання Вогню</h3>
+    <p>Гравець поглинає Вогонь, стаючи новим носієм його сили.</p>
+    <p><strong>Що відбувається?</strong> Замість жертви чи згасання, герой бере контроль над ситуацією. Вогонь більше не виривається назовні, а залишається всередині.</p>
+    <p><strong>Символіка фіналу:</strong> Гравець створює новий світопорядок, де Вогонь і Темрява можуть співіснувати.</p>
+  </div>
+  <div class="visual">
+    <video controls width="100%">
+      <source src="videos/Dark%20Souls%203%20-%20Ending%20%233%20-%20The%20End%20of%20Fire%20(Alternative).mp4" type="video/mp4" />
+    </video>
+  </div>
+</div>
+
+<h2 class="section-title">Порiвняння фiналiв та їхнiй сенс</h2>
+<table style="margin: 0 auto 40px; background-color: #2e2e2e; color: white; border-collapse: collapse; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+  <tr style="background-color: #b8860b; color: black;">
+    <th style="padding: 10px; border: 1px solid #444;">Фінал</th>
+    <th style="padding: 10px; border: 1px solid #444;">Що означає?</th>
+    <th style="padding: 10px; border: 1px solid #444;">Наслідки</th>
+  </tr>
+  <tr>
+    <td style="padding: 10px; border: 1px solid #444;">Запалювання Вогню</td>
+    <td style="padding: 10px; border: 1px solid #444;">Збереження циклу</td>
+    <td style="padding: 10px; border: 1px solid #444;">Світ не змінюється, все повториться знову</td>
+  </tr>
+  <tr>
+    <td style="padding: 10px; border: 1px solid #444;">Згасання Вогню</td>
+    <td style="padding: 10px; border: 1px solid #444;">Кінець циклу</td>
+    <td style="padding: 10px; border: 1px solid #444;">Темрява поглинає світ, можливо, народжується щось нове</td>
+  </tr>
+  <tr>
+    <td style="padding: 10px; border: 1px solid #444;">Поглинання Вогню</td>
+    <td style="padding: 10px; border: 1px solid #444;">Перехід у нову епоху</td>
+    <td style="padding: 10px; border: 1px solid #444;">Гравець отримує абсолютну владу, майбутнє невідоме</td>
+  </tr>
+</table>
+
+
+  <footer>
+    © 2025 Dark Souls 3 — Всі права захищені Тел:+38(095-914-2615) Пошта:idgbss@gmail.com
+  </footer>
+
+   <script>
+    window.addEventListener("scroll", function() {
+      const header = document.getElementById("hero");
+      if (window.scrollY > 50) {
+        header.classList.add("shrink");
+      } else {
+        header.classList.remove("shrink");
+      }
+    });
+  </script>
+  <script>
+	const current = window.location.pathname.split("/").pop().toLowerCase();
+	document.querySelectorAll(".nav-menu a").forEach(link => {
+		const href = link.getAttribute("href").toLowerCase();
+		if (href === current) {
+		link.classList.add("active");
+		}
+	});
+  </script>
+
+</body>
+</html>
