@@ -31,7 +31,7 @@
 		padding: 15px;
 		background-color: #111;
 	}
-
+	
 	nav a {
 		color: white;
 		text-decoration: none;
@@ -263,10 +263,119 @@
         margin: 10px 5px;
       }
     }
+		#poll-box {
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		background-color: #1a1a1a;
+		border: 2px solid #b8860b;
+		border-radius: 12px;
+		padding: 15px 20px;
+		color: white;
+		z-index: 9999;
+		box-shadow: 0 0 10px rgba(0,0,0,0.7);
+		font-size: 16px;
+		max-width: 260px;
+	}
+
+		#poll-box button {
+		margin: 10px 5px 0 0;
+		padding: 5px 10px;
+		background-color: #b8860b;
+		color: black;
+		border: none;
+		border-radius: 6px;
+		cursor: pointer;
+		font-weight: bold;
+		transition: background 0.3s;
+	}
+
+		#poll-box button:hover {
+		background-color: #ffcc00;
+	}
+	  .stat-calculator-block {
+		display: flex;
+		gap: 20px;
+		align-items: flex-start;
+		flex-wrap: wrap;
+	}
+
+	.stat-calculator-block .visual {
+		flex: 1;
+		min-width: 200px;
+	}
+
+	.stat-calculator-block .visual img {
+		max-width: 100%;
+		border-radius: 12px;
+	}
+
+	.stat-calculator {
+		flex: 2;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		text-align: left;
+	}
+
+	.stat-calculator label {
+		font-weight: 500;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.stat-calculator input[type="number"],
+	.stat-calculator select {
+		margin-top: 4px;
+		padding: 6px 10px;
+		border-radius: 8px;
+		border: 2px solid #b8860b;
+		max-width: 120px;
+	}
+
+	.stat-calculator select {
+		max-width: 200px;
+	}
+
+	.stat-calculator button {
+		margin-top: 15px;
+		padding: 10px;
+		font-size: 16px;
+		background-color: #b8860b;
+		color: white;
+		border: none;
+		border-radius: 8px;
+		cursor: pointer;
+		width: fit-content;
+	}
+
+	.stat-calculator #result {
+		margin-top: 20px;
+		font-weight: bold;
+	}
+
+</style>
+
   </style>
 </head>
 <body>
+<div id="poll-box">
+  <p>Чи вам подобається Dark Souls 3?</p>
+  <button onclick="submitAnswer('Так')">Так</button>
+  <button onclick="submitAnswer('Ні')">Ні</button>
+</div>
 
+<script>
+  function submitAnswer(answer) {
+    const box = document.getElementById('poll-box');
+    if (answer.toLowerCase() === 'ні') {
+      box.innerHTML = `<p>Прикро, що гра вам не сподобалась.</p>`;
+    } else {
+      box.innerHTML = `<p>Дякуємо за відповідь: <strong>${answer}</strong>!</p>`;
+    }
+    setTimeout(() => box.style.display = 'none', 3000);
+  }
+</script>
   <header class="hero-header" id="hero">
     <div class="overlay"></div>
 
@@ -532,9 +641,46 @@
 
   createQuiz();
 </script>
-
 </div>
-</section>
+<div class="section-title">Калькулятор характеристик персонажа</div>
+
+<div class="content-block stat-calculator-block">
+  <div class="visual">
+    <img src="images/dsadad.jpg" alt="Character Stats">
+  </div>
+
+  <div class="calculator stat-calculator">
+    <div class="info">Ви можете розподілити <strong>50 очок</strong> між характеристиками нижче:</div>
+
+    <label>Сила:
+      <input type="number" id="strength" value="0" min="0" max="50">
+    </label>
+
+    <label>Спритність:
+      <input type="number" id="dexterity" value="0" min="0" max="50">
+    </label>
+
+    <label>Інтелект:
+      <input type="number" id="intelligence" value="0" min="0" max="50">
+    </label>
+
+    <label>Витривалість:
+      <input type="number" id="vitality" value="0" min="0" max="50">
+    </label>
+
+    <label>Клас персонажа:
+      <select id="class">
+        <option value="warrior">Воїн</option>
+        <option value="mage">Маг</option>
+        <option value="rogue">Розбійник</option>
+        <option value="paladin">Паладин</option>
+      </select>
+    </label>
+
+    <button onclick="evaluateCharacter()">Оцінити персонажа</button>
+    <div id="result"></div>
+  </div>
+</div>
 
   <footer>
      © 2025 Dark Souls 3 — Всі права захищені Тел:+38(095-914-2615) Пошта:idgbss@gmail.com
@@ -559,6 +705,36 @@
 		}
 	});
   </script>
+   <script>
+  function evaluateCharacter() {
+    const strength = parseInt(document.getElementById("strength").value) || 0;
+    const dexterity = parseInt(document.getElementById("dexterity").value) || 0;
+    const intelligence = parseInt(document.getElementById("intelligence").value) || 0;
+    const vitality = parseInt(document.getElementById("vitality").value) || 0;
+    const total = strength + dexterity + intelligence + vitality;
+    const resultEl = document.getElementById("result");
 
+    if (total > 50) {
+      resultEl.textContent = "Ви перевищили допустиму кількість очок!";
+      resultEl.style.color = "#b8860b";
+      return;
+    }
+
+    if (total < 50) {
+      resultEl.textContent = "Ви не використали всі 50 очок.";
+      resultEl.style.color = "#b8860b";
+      return;
+    }
+
+    if (strength >= 15 || intelligence >= 15 || vitality >= 15) {
+      resultEl.textContent = "Сильний персонаж!";
+      resultEl.style.color = "#b8860b";
+    } else {
+      resultEl.textContent = "Персонаж посередньої сили.";
+      resultEl.style.color = "#b8860b";
+    }
+  }
+</script>
 </body>
+
 </html>
